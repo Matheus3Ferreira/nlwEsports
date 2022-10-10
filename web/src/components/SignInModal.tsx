@@ -1,24 +1,35 @@
 import * as Dialog from "@radix-ui/react-dialog";
-import { DiscordLogo, User } from "phosphor-react";
+import { User } from "phosphor-react";
 import { Input } from "./Form/Input";
 
 import { FormEvent, SetStateAction, useState } from "react";
-import { Link } from "react-router-dom";
 import DiscordButton from "./Form/DiscordButton";
+import signIn from "../api/auth/signIn";
+import { IUserData } from "../pages/Home";
+import getUserData from "../api/getUserData";
 
 interface ISignInProps {
   onChangeModal: React.Dispatch<
     SetStateAction<{ signIn: boolean; signUp: boolean }>
   >;
+  setUserData: React.Dispatch<SetStateAction<IUserData>>;
 }
 
-export function SignInModal({ onChangeModal }: ISignInProps) {
+export function SignInModal({ onChangeModal, setUserData }: ISignInProps) {
   async function handleFormSubmit(event: FormEvent) {
     event.preventDefault();
-
     const formData = new FormData(event.target as HTMLFormElement);
+
     const data = Object.fromEntries(formData);
-    // await axios.post("http://localhost:3333/api/auth/user", data); IMPLEMENT AFTER BACKEND
+    const token = await signIn({ email: data.email, password: data.password });
+    if (token) {
+      localStorage.setItem("jwt_token", token);
+      getUserData({ token, setUserData });
+      onChangeModal({
+        signIn: false,
+        signUp: false,
+      });
+    }
   }
 
   return (
@@ -43,11 +54,11 @@ export function SignInModal({ onChangeModal }: ISignInProps) {
           className="mt-8 flex flex-col gap-4 justify-center"
         >
           <div className="flex flex-col gap-2">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="email">Email</label>
             <Input
-              name="username"
+              name="email"
               type="text"
-              id="username"
+              id="email"
               placeholder="JoãoBananinha2"
             />
           </div>

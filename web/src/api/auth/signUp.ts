@@ -1,6 +1,6 @@
 import axios from "axios";
 
-interface IUserProps {
+interface ISignUpProps {
   username: FormDataEntryValue;
   password: FormDataEntryValue;
   email: FormDataEntryValue;
@@ -8,7 +8,7 @@ interface IUserProps {
   whatsapp: boolean;
 }
 
-export default async function signUp(user: IUserProps) {
+export default async function signUp(user: ISignUpProps) {
   try {
     const token = await axios.post("http://localhost:3333/api/users", user);
     return token.data as string;

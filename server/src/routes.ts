@@ -51,4 +51,6 @@ routes.post("/auth/users", sessionStandardController.create);
 
 routes.get("/test/middleware", ensureAuthenticated); // Verify JWT. IMPLEMENT: OAuth Verifycation
 
+routes.get("/me", ensureAuthenticated, sessionStandardController.me);
+
 export default routes;

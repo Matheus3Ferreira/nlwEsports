@@ -42,7 +42,7 @@ export default function ProfileButton({
             <span className="text-white font-semibold text-lg">
               {username}
               <span className="text-zinc-600 font-normal">
-                #{discriminator}
+                {discriminator && "#" + discriminator}
               </span>
             </span>
           </div>

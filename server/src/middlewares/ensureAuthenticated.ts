@@ -13,7 +13,6 @@ export default function ensureAuthenticated(
   next: NextFunction
 ): void | Response {
   const authHeader = request.headers.authorization;
-
   if (!authHeader)
     return response.status(401).json({ error: "No token provided" });
 
@@ -29,7 +28,7 @@ export default function ensureAuthenticated(
     return response.status(401).json({ error: "Invalid JWT enviremenets" });
   }
   const { id } = verify(token, process.env.JWT_SECRET) as ITokenPayload;
-  if (!id) throw new Error("Invalid token");
-  request.user = { id: id };
+  if (!id) return response.status(401).json({ error: "Invalid token" });
+  request.userId = id;
   return next();
 }

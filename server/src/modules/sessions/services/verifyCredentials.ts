@@ -14,7 +14,6 @@ export default async function verifyCredentials({
   if (!user) {
     return;
   }
-
   if (user.password) {
     const isValidPassword = await compare(password, user.password);
 

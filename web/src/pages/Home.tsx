@@ -8,7 +8,8 @@ import ProfileButton from "../components/ProfileButton";
 import getGames from "../api/getGames";
 import { SignInModal } from "../components/SignInModal";
 import { SignUpModal } from "../components/SignUpModal";
-import getUserDiscordData from "../api/auth/getUserDiscordData";
+import getUserDiscordData from "../api/getUserDiscordData";
+import getUserData from "../api/getUserData";
 
 export interface Game {
   bannerUrl: string;
@@ -24,6 +25,14 @@ export interface IUserDiscordData {
   discriminator: string;
 }
 
+export interface IUserData {
+  id: string;
+  username: string;
+  phone: string;
+  whatsapp: boolean;
+  discord?: IUserDiscordData | undefined;
+}
+
 export default function Home() {
   const [games, setGames] = useState<Game[]>([]);
   const [userDiscordData, setUserDiscordData] = useState<IUserDiscordData>({
@@ -32,10 +41,15 @@ export default function Home() {
     username: "",
     discriminator: "",
   });
-  const [whichModalIsOpen, setWhichModalIsOpen] = useState<{
-    signIn: boolean;
-    signUp: boolean;
-  }>({
+
+  const [userData, setUserData] = useState<IUserData>({
+    id: "",
+    username: "",
+    phone: "",
+    whatsapp: false,
+    discord: userDiscordData || undefined,
+  });
+  const [whichModalIsOpen, setWhichModalIsOpen] = useState({
     signIn: false,
     signUp: false,
   });
@@ -49,6 +63,10 @@ export default function Home() {
       const token = localStorage.getItem("access_token_discord") as string;
       getUserDiscordData({ token, setUserDiscordData });
     }
+    if (localStorage.getItem("jwt_token") !== null) {
+      const token = localStorage.getItem("jwt_token") as string;
+      getUserData({ token, setUserData });
+    }
   }, []);
 
   return (
@@ -57,11 +75,11 @@ export default function Home() {
         <div className="w-14 h-14" />
         <img src={logoImg} alt="" />
         <Dialog.Root>
-          {userDiscordData.id ? (
+          {userData.id ? (
             <ProfileButton
-              id={userDiscordData.id}
+              id={userDiscordData.id || userData.id}
               avatar={userDiscordData.avatar}
-              username={userDiscordData.username}
+              username={userDiscordData.username || userData.username}
               discriminator={userDiscordData.discriminator}
             />
           ) : (
@@ -78,10 +96,16 @@ export default function Home() {
                 Conectar-se
               </Dialog.Trigger>
               {whichModalIsOpen.signIn && (
-                <SignInModal onChangeModal={setWhichModalIsOpen} />
+                <SignInModal
+                  onChangeModal={setWhichModalIsOpen}
+                  setUserData={setUserData}
+                />
               )}
               {whichModalIsOpen.signUp && (
-                <SignUpModal onChangeModal={setWhichModalIsOpen} />
+                <SignUpModal
+                  onChangeModal={setWhichModalIsOpen}
+                  setUserData={setUserData}
+                />
               )}
             </div>
           )}

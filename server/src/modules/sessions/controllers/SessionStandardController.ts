@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import findUserByEmail from "../../users/services/findUserByEmail";
+import findUserById from "../../users/services/findUserById";
 import generateTokenService from "../services/generateToken";
 import verifyCredentials from "../services/verifyCredentials";
 
@@ -9,12 +9,23 @@ export default class SessionStandardController {
 
     const verifiedUser = await verifyCredentials({ email, password });
     if (!verifiedUser) {
-      throw new Error("Email or password not valid");
+      return response.status(400).json("Email or password not valid");
     }
-    verifiedUser.password = "";
 
     const token = generateTokenService(verifiedUser.id);
 
-    return response.json({ verifiedUser, token });
+    return response.json(token);
+  }
+  public async me(request: Request, response: Response) {
+    const id = request.userId;
+    const user = await findUserById(id);
+    if (!user) {
+      return response
+        .status(500)
+        .json(
+          "User not found after authenticate. Seems like there is something wrong in authentication middleware."
+        );
+    }
+    return response.json(user);
   }
 }

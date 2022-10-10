@@ -1,18 +1,21 @@
 import * as Dialog from "@radix-ui/react-dialog";
-import { DiscordLogo, User, WhatsappLogo } from "phosphor-react";
+import { User, WhatsappLogo } from "phosphor-react";
 import { Input } from "./Form/Input";
 import { FormEvent, SetStateAction, useState } from "react";
 import CheckBox from "./Form/CheckBox";
 import DiscordButton from "./Form/DiscordButton";
-import signUp from "../api/signUp";
+import signUp from "../api/auth/signUp";
+import { IUserData } from "../pages/Home";
+import getUserData from "../api/getUserData";
 
 interface ISignUpProps {
   onChangeModal: React.Dispatch<
     SetStateAction<{ signIn: boolean; signUp: boolean }>
   >;
+  setUserData: React.Dispatch<SetStateAction<IUserData>>;
 }
 
-export function SignUpModal({ onChangeModal }: ISignUpProps) {
+export function SignUpModal({ onChangeModal, setUserData }: ISignUpProps) {
   const [whatsappIsCheck, setwhatsappIsCheck] = useState<boolean>(false);
 
   async function handleFormSubmit(event: FormEvent) {
@@ -28,7 +31,14 @@ export function SignUpModal({ onChangeModal }: ISignUpProps) {
       phone: data.phone,
     };
     const token = await signUp(user);
-    if (token) localStorage.setItem("jwt_token", token);
+    if (token) {
+      localStorage.setItem("jwt_token", token);
+      onChangeModal({
+        signIn: false,
+        signUp: false,
+      });
+      getUserData({ token, setUserData });
+    }
   }
 
   return (
