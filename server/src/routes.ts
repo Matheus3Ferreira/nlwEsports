@@ -8,6 +8,7 @@ import passport from "passport";
 import discordStrategy from "./strategies/discordStrategy";
 import UserController from "./modules/users/controllers/UserController";
 import SessionStandardController from "./modules/sessions/controllers/SessionStandardController";
+import ensureAuthenticated from "./middlewares/ensureAuthenticated";
 
 const routes = Router();
 const gameController = new GameController();
@@ -47,5 +48,7 @@ routes.get("/users/:id", userController.findOne);
 routes.post("/users", userController.create);
 
 routes.post("/auth/users", sessionStandardController.create);
+
+routes.get("/test/middleware", ensureAuthenticated); // Verify JWT. IMPLEMENT: OAuth Verifycation
 
 export default routes;
