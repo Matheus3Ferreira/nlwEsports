@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { IUserDiscordData } from "../pages/Home";
+import standardAvatar from "../../public/standard_avatar.jpg";
 
 export default function ProfileButton({
   id,
@@ -30,7 +31,11 @@ export default function ProfileButton({
         className="flex items-center gap-2 relative right-14"
       >
         <img
-          src={`https://cdn.discordapp.com/avatars/${id}/${avatar}.png`}
+          src={
+            avatar
+              ? `https://cdn.discordapp.com/avatars/${id}/${avatar}.png`
+              : standardAvatar
+          }
           alt=""
           className="w-14 h-14 rounded-full"
         />
