@@ -3,22 +3,22 @@ import { convertHoursStringToMinutes } from "../../../utils/convert-hours-string
 import { IAdRequestResponse } from "../interfaces";
 
 interface IRequest {
-  body: IAdRequestResponse;
+  adData: IAdRequestResponse;
   gameId: string;
 }
 
-export async function createAd({ body, gameId }: IRequest) {
+export async function createAd({ adData, gameId }: IRequest) {
   const prisma = new PrismaClient();
   const ad = await prisma.ad.create({
     data: {
       gameId: gameId,
-      name: body.name,
-      yearsPlaying: body.yearsPlaying,
-      discord: body.discord,
-      weekDays: body.weekDays.join(","),
-      hourStart: convertHoursStringToMinutes(body.hourStart),
-      hourEnd: convertHoursStringToMinutes(body.hourEnd),
-      useVoiceChannel: body.useVoiceChannel,
+      name: adData.name,
+      yearsPlaying: adData.yearsPlaying,
+      discord: adData.discord,
+      weekDays: adData.weekDays.join(","),
+      hourStart: convertHoursStringToMinutes(adData.hourStart),
+      hourEnd: convertHoursStringToMinutes(adData.hourEnd),
+      useVoiceChannel: adData.useVoiceChannel,
     },
   });
   return ad;

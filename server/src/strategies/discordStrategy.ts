@@ -2,8 +2,10 @@ import { Strategy } from "passport-discord";
 ("passport-discord");
 import passport from "passport";
 import "dotenv";
-import findUserByDiscordId from "../modules/users/services/findUserById";
-import createDiscordUser from "../modules/users/services/createDiscordUser";
+import findUserDiscord from "../modules/users/services/findUserDiscord";
+import createDiscordUser from "../modules/sessions/services/createDiscordUser";
+import createUser from "../modules/users/services/createUser";
+import { User } from "@prisma/client";
 
 export default function discordStrategy() {
   const scopes = ["identify", "email", "guilds"];
@@ -24,31 +26,40 @@ export default function discordStrategy() {
         scope: scopes,
       },
       async (accessToken, refreshToken, profile, done) => {
-        const user = await findUserByDiscordId(profile.id);
-        console.log(accessToken);
-        try {
-          if (!user) {
-            if (!profile.avatar) {
-              profile.avatar = "Undefined";
-            }
-            if (!profile.email) {
-              profile.email = "Undefined";
-            }
-            const save = await createDiscordUser(
-              profile.id,
-              profile.username,
-              profile.avatar,
-              profile.email,
-              profile.discriminator
-            );
-            done(null, save);
-          } else {
-            done(null, user);
+        const user = await findUserDiscord(profile.id);
+        if (!user) {
+          // Create user if it doesn't exist
+          if (!profile.avatar) {
+            profile.avatar = "Undefined";
           }
-        } catch (error: any) {
-          done(error.message, undefined);
+          if (!profile.email) {
+            profile.email = "Undefined";
+          }
+          const newUser = await createUser({
+            username: profile.username,
+            email: profile.email,
+          });
+          if (!newUser) {
+            return done(new Error("Create user failed"));
+          }
+          const userDiscord = await createDiscordUser(
+            profile.id,
+            profile.username,
+            profile.avatar,
+            profile.discriminator,
+            newUser.id
+          );
+          done(null, userDiscord);
+        } else {
+          done(null, user);
         }
       }
     )
   );
+  passport.serializeUser((user, done) => {
+    done(null, user);
+  });
+  passport.deserializeUser((user: User, done) => {
+    done(null, user);
+  });
 }

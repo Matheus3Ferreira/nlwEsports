@@ -4,10 +4,10 @@ import { CreateAdBanner } from "../components/CreateAdBanner";
 import { useEffect, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { CreateAdModal } from "../components/CreateAdModal";
-import axios from "axios";
 import ProfileButton from "../components/ProfileButton";
-import { useSearchParams } from "react-router-dom";
 import getGames from "../api/getGames";
+import { SignInModal } from "../components/SignInModal";
+import { SignUpModal } from "../components/SignUpModal";
 import getUserDiscordData from "../api/auth/getUserDiscordData";
 
 export interface Game {
@@ -17,7 +17,7 @@ export interface Game {
   _count: { ads: number };
 }
 
-export interface IUserData {
+export interface IUserDiscordData {
   id: string;
   avatar: string;
   username: string;
@@ -26,11 +26,18 @@ export interface IUserData {
 
 export default function Home() {
   const [games, setGames] = useState<Game[]>([]);
-  const [userData, setUserData] = useState<IUserData>({
+  const [userDiscordData, setUserDiscordData] = useState<IUserDiscordData>({
     id: "",
     avatar: "",
     username: "",
     discriminator: "",
+  });
+  const [whichModalIsOpen, setWhichModalIsOpen] = useState<{
+    signIn: boolean;
+    signUp: boolean;
+  }>({
+    signIn: false,
+    signUp: false,
   });
 
   useEffect(() => {
@@ -38,7 +45,10 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    getUserDiscordData(setUserData);
+    if (localStorage.getItem("access_token_discord") !== null) {
+      const token = localStorage.getItem("access_token_discord") as string;
+      getUserDiscordData({ token, setUserDiscordData });
+    }
   }, []);
 
   return (
@@ -46,21 +56,36 @@ export default function Home() {
       <header className=" justify-between items-center flex w-[100%]">
         <div className="w-14 h-14" />
         <img src={logoImg} alt="" />
-        {userData.id ? (
-          <ProfileButton
-            id={userData.id}
-            avatar={userData.avatar}
-            username={userData.username}
-            discriminator={userData.discriminator}
-          />
-        ) : (
-          <a
-            className="font-semibold text-violet-600 m-7 hover:animate-shake"
-            href="http://localhost:3333/api/auth/discord"
-          >
-            Conectar-se
-          </a>
-        )}
+        <Dialog.Root>
+          {userDiscordData.id ? (
+            <ProfileButton
+              id={userDiscordData.id}
+              avatar={userDiscordData.avatar}
+              username={userDiscordData.username}
+              discriminator={userDiscordData.discriminator}
+            />
+          ) : (
+            <div>
+              <Dialog.Trigger
+                onClick={() =>
+                  setWhichModalIsOpen({
+                    signIn: true,
+                    signUp: false,
+                  })
+                }
+                className="font-semibold text-violet-600 m-7 hover:animate-shake"
+              >
+                Conectar-se
+              </Dialog.Trigger>
+              {whichModalIsOpen.signIn && (
+                <SignInModal onChangeModal={setWhichModalIsOpen} />
+              )}
+              {whichModalIsOpen.signUp && (
+                <SignUpModal onChangeModal={setWhichModalIsOpen} />
+              )}
+            </div>
+          )}
+        </Dialog.Root>
       </header>
       <h1 className="text-6xl text-white font-black mt-20 ">
         Seu{" "}

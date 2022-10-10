@@ -1,12 +1,12 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { Check, GameController } from "phosphor-react";
 import { Input } from "./Form/Input";
-import * as Checkbox from "@radix-ui/react-checkbox";
 import { SelectRadix } from "./Form/SelectRadix";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
-import { FormEvent, useState } from "react";
+import { FormEvent, SetStateAction, useState } from "react";
 import axios from "axios";
 import { Game } from "../pages/Home";
+import CheckBox from "./Form/CheckBox";
 
 interface Games {
   games: Game[];
@@ -190,18 +190,11 @@ export function CreateAdModal({ games }: Games) {
             </div>
           </div>
 
-          <label className="mt-2 flex gap-2 items-center text-sm">
-            <Checkbox.Root
-              onCheckedChange={() => setUseVoiceChannel(!useVoiceChannel)}
-              checked={useVoiceChannel}
-              className="w-6 h-6 p-1 rounded bg-zinc-900"
-            >
-              <Checkbox.Indicator>
-                <Check className="w-4 h-4 text-emerald-400" />
-              </Checkbox.Indicator>
-            </Checkbox.Root>
-            Costumo me conectar ao chat de voz
-          </label>
+          <CheckBox
+            isCheck={useVoiceChannel}
+            setIsCheck={setUseVoiceChannel}
+            label="Costumo me conectar ao chat de voz"
+          />
 
           <footer className="mt-4 flex justify-end gap-4">
             <Dialog.Close

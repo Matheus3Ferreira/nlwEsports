@@ -1,15 +1,12 @@
 import { PrismaClient } from "@prisma/client";
 
-export default async function findUserById(id: string) {
+export default async function findUserByEmail(email: string) {
   const prisma = new PrismaClient();
   const user = await prisma.user.findFirst({
     where: {
-      id: id,
+      email: email,
     },
   });
-  if (user) {
-    user.password = "";
-    return user;
-  }
-  return;
+
+  return user;
 }

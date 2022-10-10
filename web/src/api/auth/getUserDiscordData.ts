@@ -1,27 +1,30 @@
 import axios from "axios";
 import React from "react";
-import { IUserData } from "../../pages/Home";
+import { IUserDiscordData } from "../../pages/Home";
 
-export default async function getUserDiscordData(
-  setUserData: React.Dispatch<React.SetStateAction<IUserData>>
-) {
-  const parsedUrl = new URL(window.location.href);
-  const accessToken = parsedUrl.searchParams.get("access_token");
+interface IPropsUserDiscord {
+  token: string;
+  setUserDiscordData: React.Dispatch<React.SetStateAction<IUserDiscordData>>;
+}
 
-  await axios
+export default async function getUserDiscordData({
+  token,
+  setUserDiscordData,
+}: IPropsUserDiscord) {
+  const data = await axios
     .get("https://discord.com/api/users/@me", {
       headers: {
-        authorization: `Bearer ${accessToken}`,
+        authorization: `Bearer ${token}`,
       },
     })
-    .then((response) =>
-      setUserData({
-        id: response.data.id,
-        avatar: response.data.avatar,
-        username: response.data.username,
-        discriminator: response.data.discriminator,
+    .then(({ data }) =>
+      setUserDiscordData({
+        username: data.username,
+        avatar: data.avatar,
+        discriminator: data.discriminator,
+        id: data.id,
       })
     );
 
-  return;
+  return data;
 }

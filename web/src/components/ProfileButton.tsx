@@ -1,18 +1,23 @@
-import { useState } from "react";
-import { IUserData } from "../pages/Home";
+import React, { useState } from "react";
+import { IUserDiscordData } from "../pages/Home";
 
 export default function ProfileButton({
   id,
   avatar,
   username,
   discriminator,
-}: IUserData) {
+}: IUserDiscordData) {
   const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false);
 
   function handleKeyPress(e: React.KeyboardEvent): void {
     if (e.key === "Escape") {
       setIsProfileOpen(false);
     }
+  }
+
+  function handleSignOut() {
+    localStorage.clear();
+    window.location.reload();
   }
 
   return (
@@ -41,7 +46,9 @@ export default function ProfileButton({
               </span>
             </span>
           </div>
-          <button className="text-red-600">Log Out</button>
+          <button className="text-red-600" onClick={handleSignOut}>
+            Log Out
+          </button>
         </div>
       )}
     </div>

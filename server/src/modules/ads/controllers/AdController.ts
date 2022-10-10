@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
 import findAdsbyGameService from "../services/findAdsByGameService";
 import { createAd } from "../services/createAd";
 import { IAdRequestResponse, IAdSchema } from "../interfaces";
@@ -15,8 +14,8 @@ export default class AdController {
 
   public async create(request: Request, response: Response): Promise<Response> {
     const gameId = request.params.id;
-    const body: IAdRequestResponse = request.body; // Change type
-    const ad: IAdSchema = await createAd({ gameId, body });
+    const adData: IAdRequestResponse = request.body;
+    const ad: IAdSchema = await createAd({ gameId, adData });
 
     return response.status(201).json(ad);
   }
