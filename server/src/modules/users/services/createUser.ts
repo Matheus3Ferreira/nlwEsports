@@ -13,15 +13,6 @@ export interface IUser {
 export default async function createUser(user: IUser) {
   const prisma = new PrismaClient();
 
-  const verifyEmail = await prisma.user.findFirst({
-    where: {
-      email: user.email,
-    },
-  });
-  if (verifyEmail) {
-    throw new Error("Email already exists");
-  }
-
   if (user.password) {
     user.password = await hash(user.password, 10);
   }

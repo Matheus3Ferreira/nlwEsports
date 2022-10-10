@@ -2,9 +2,9 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { DiscordLogo, User, WhatsappLogo } from "phosphor-react";
 import { Input } from "./Form/Input";
 import { FormEvent, SetStateAction, useState } from "react";
-import axios from "axios";
 import CheckBox from "./Form/CheckBox";
 import DiscordButton from "./Form/DiscordButton";
+import signUp from "../api/signUp";
 
 interface ISignUpProps {
   onChangeModal: React.Dispatch<
@@ -20,13 +20,15 @@ export function SignUpModal({ onChangeModal }: ISignUpProps) {
 
     const formData = new FormData(event.target as HTMLFormElement);
     const data = Object.fromEntries(formData);
-    // axios.post("http://localhost:3333/api/user", {
-    //   email: data.email,
-    //   password: data.password,
-    //   phone: data.phone,
-    //   username: data.username,
-    //   whatsapp: whatsappIsCheck,
-    // });
+    const user = {
+      whatsapp: whatsappIsCheck,
+      username: data.username,
+      password: data.password,
+      email: data.email,
+      phone: data.phone,
+    };
+    const token = await signUp(user);
+    if (token) localStorage.setItem("jwt_token", token);
   }
 
   return (
@@ -106,7 +108,7 @@ export function SignUpModal({ onChangeModal }: ISignUpProps) {
               className="w-auto bg-zinc-500 px-5 h-12 rounded-md font-semibold flex items-center gap-3 hover:bg-zinc-600"
             >
               <User className="w-8 h-8" />
-              Conectar-se
+              Registrar-se
             </button>
           </div>
           <div className="flex text-zinc-900 items-center gap-3 font-black">
