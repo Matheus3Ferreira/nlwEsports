@@ -1,10 +1,11 @@
 # NLW Esports
+![image](imgsREADME/demo.png)
 
-## O seu duo está aqui!
+## O seu duo 💏 está aqui! 
 
 O NLW Esports é uma plataforma web e mobile de anúncios de gamers a procura de alguém para jogar nos horários disponiveis.
 
-## Tecnologias utilizadas na construção
+## Tecnologias utilizadas na construção 🤖
 
 - React
 - Node.js
@@ -14,10 +15,13 @@ O NLW Esports é uma plataforma web e mobile de anúncios de gamers a procura de
 - Express
 - MySQL
 - Prisma
+- Tailwind
 - PhosporIcons
 - Radix UI
+- OAuth2 (Discord)
+- JWT
 
-## Ultimas implementações
+## Ultimas implementações 🚀
 
 ### Autenticação
     - OAuth2 (Discord)
@@ -28,10 +32,9 @@ O NLW Esports é uma plataforma web e mobile de anúncios de gamers a procura de
     - Carousel na lista de games
 
 
-## O que vem ai?
+## O que vem ai? 🛠
 
-- Autorização (Somente usuários cadastrados podem ver informações de contato)
+- !!EM BREVE!!: Deploy no Heroku.
+- Autorização (Somente usuários cadastrados podem ver informações de contato de outros usuários)
 - Criação de anúncios com web
-- Notificações (Novo duo encontrado, Fulano quer ser meu duo)
-
-
+- My ads (Sua tela de gestão de ads.);

@@ -74,13 +74,14 @@ export default function Home() {
       getUserData({ token, setUserData });
     }
   }, []);
+  console.log(userData, userDiscordData);
   return (
     <div className="flex justify-center items-center flex-col my-20 px-5">
       <header className="justify-center items-center flex flex-col-reverse w-[100%] flex-wrap">
         <img src={logoImg} alt="" />
         <div className="relative self-end md:absolute md:right-4">
           <Dialog.Root>
-            {userData.id || userDiscordData ? (
+            {userData.id || userDiscordData.id ? (
               <ProfileButton
                 id={userDiscordData.id ? userDiscordData.id : userData.id}
                 avatar={userDiscordData.avatar}
