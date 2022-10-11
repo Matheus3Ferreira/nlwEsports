@@ -10,8 +10,9 @@ import { SignInModal } from "../components/SignInModal";
 import { SignUpModal } from "../components/SignUpModal";
 import getUserDiscordData from "../api/getUserDiscordData";
 import getUserData from "../api/getUserData";
+import GamesCarrosel from "../components/GamesCarrosel";
 
-export interface Game {
+export interface IGame {
   bannerUrl: string;
   id: string;
   title: string;
@@ -34,7 +35,7 @@ export interface IUserData {
 }
 
 export default function Home() {
-  const [games, setGames] = useState<Game[]>([]);
+  const [games, setGames] = useState<IGame[]>([]);
   const [userDiscordData, setUserDiscordData] = useState<IUserDiscordData>({
     id: "",
     avatar: "",
@@ -111,6 +112,7 @@ export default function Home() {
           )}
         </Dialog.Root>
       </header>
+
       <h1 className="text-6xl text-white font-black mt-20 ">
         Seu{" "}
         <span className="text-transparent bg-nlw-gradient bg-clip-text">
@@ -118,16 +120,7 @@ export default function Home() {
         </span>{" "}
         está aqui.
       </h1>
-      <div className="grid grid-cols-6 gap-6 mt-16 max-w-[1344px]">
-        {games.map((game) => (
-          <GameBanner
-            title={game.title}
-            adsCount={game._count.ads}
-            bannerUrl={game.bannerUrl}
-            key={game.id}
-          />
-        ))}
-      </div>
+      <GamesCarrosel games={games} />
       <Dialog.Root>
         <CreateAdBanner />
         <CreateAdModal games={games} />

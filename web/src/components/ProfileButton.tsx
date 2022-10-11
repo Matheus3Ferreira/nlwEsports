@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { IUserDiscordData } from "../pages/Home";
-import standardAvatar from "../../public/standard_avatar.jpg";
+import standardAvatar from "../public/standard_avatar.jpg";
 
 export default function ProfileButton({
   id,
