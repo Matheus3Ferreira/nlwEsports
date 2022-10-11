@@ -74,6 +74,7 @@ export default function Home() {
       getUserData({ token, setUserData });
     }
   }, []);
+  console.log(localStorage);
 
   return (
     <div className="flex justify-center items-center flex-col my-20 px-5">
