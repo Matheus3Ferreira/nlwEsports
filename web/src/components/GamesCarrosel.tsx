@@ -46,7 +46,7 @@ export default function GamesCarrosel({ games }: IProps) {
         onClick={(e: any) => e.stopPropagation() || instanceRef.current?.next()}
         disabled={
           instanceRef.current &&
-          currentSlide === instanceRef.current.track.details.slides.length - 1
+          currentSlide === instanceRef.current.track.details.slides.length - 6
         }
       />
     </div>
@@ -67,7 +67,7 @@ function Arrow(props: {
       {props.left ? (
         <CaretLeft className={`${disabeld && "text-zinc-600"}`} size={60} />
       ) : (
-        <CaretRight className={`${disabeld && ""} `} size={60} />
+        <CaretRight className={`${disabeld && "text-zinc-600"} `} size={60} />
       )}
     </button>
   );
