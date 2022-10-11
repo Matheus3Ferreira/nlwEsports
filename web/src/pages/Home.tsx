@@ -120,7 +120,7 @@ export default function Home() {
         </span>{" "}
         está aqui.
       </h1>
-      <GamesCarrosel games={games} />
+      {games.length > 1 && <GamesCarrosel games={games} />}
       <Dialog.Root>
         <CreateAdBanner />
         <CreateAdModal games={games} />

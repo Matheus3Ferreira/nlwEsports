@@ -17,7 +17,10 @@ export default function GamesCarrosel({ games }: IProps) {
   });
 
   return (
-    <div ref={sliderRef} className="keen-slider flex mt-16 max-w-[1344px]">
+    <div
+      ref={sliderRef}
+      className="keen-slider flex mt-16 max-w-[1344px] overflow-hidden"
+    >
       {games.map((game) => (
         <GameBanner
           title={game.title}
