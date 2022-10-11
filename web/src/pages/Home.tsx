@@ -77,45 +77,46 @@ export default function Home() {
 
   return (
     <div className="flex justify-center items-center flex-col my-20 px-5">
-      <header className=" justify-between items-center flex w-[100%] flex-wrap">
-        <div className="w-14 h-14" />
+      <header className="justify-center items-center flex flex-col-reverse w-[100%] flex-wrap">
         <img src={logoImg} alt="" />
-        <Dialog.Root>
-          {userData.id ? (
-            <ProfileButton
-              id={userDiscordData.id || userData.id}
-              avatar={userDiscordData.avatar}
-              username={userDiscordData.username || userData.username}
-              discriminator={userDiscordData.discriminator}
-            />
-          ) : (
-            <div>
-              <Dialog.Trigger
-                onClick={() =>
-                  setWhichModalIsOpen({
-                    signIn: true,
-                    signUp: false,
-                  })
-                }
-                className="font-semibold text-violet-600 m-7 hover:animate-shake"
-              >
-                Conectar-se
-              </Dialog.Trigger>
-              {whichModalIsOpen.signIn && (
-                <SignInModal
-                  onChangeModal={setWhichModalIsOpen}
-                  setUserData={setUserData}
-                />
-              )}
-              {whichModalIsOpen.signUp && (
-                <SignUpModal
-                  onChangeModal={setWhichModalIsOpen}
-                  setUserData={setUserData}
-                />
-              )}
-            </div>
-          )}
-        </Dialog.Root>
+        <div className="relative self-end md:absolute md:right-4">
+          <Dialog.Root>
+            {userData.id ? (
+              <ProfileButton
+                id={userDiscordData.id || userData.id}
+                avatar={userDiscordData.avatar}
+                username={userDiscordData.username || userData.username}
+                discriminator={userDiscordData.discriminator}
+              />
+            ) : (
+              <div>
+                <Dialog.Trigger
+                  onClick={() =>
+                    setWhichModalIsOpen({
+                      signIn: true,
+                      signUp: false,
+                    })
+                  }
+                  className="font-semibold text-violet-600 m-7 hover:animate-shake"
+                >
+                  Conectar-se
+                </Dialog.Trigger>
+                {whichModalIsOpen.signIn && (
+                  <SignInModal
+                    onChangeModal={setWhichModalIsOpen}
+                    setUserData={setUserData}
+                  />
+                )}
+                {whichModalIsOpen.signUp && (
+                  <SignUpModal
+                    onChangeModal={setWhichModalIsOpen}
+                    setUserData={setUserData}
+                  />
+                )}
+              </div>
+            )}
+          </Dialog.Root>
+        </div>
       </header>
 
       <h1 className="text-6xl text-white font-black mt-20 ">
