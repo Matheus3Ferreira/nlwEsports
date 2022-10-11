@@ -36,6 +36,7 @@ export interface IUserData {
 
 export default function Home() {
   const [games, setGames] = useState<IGame[]>([]);
+  const [gamesLoaded, setGamesLoaded] = useState<boolean>(false);
   const [userDiscordData, setUserDiscordData] = useState<IUserDiscordData>({
     id: "",
     avatar: "",
@@ -58,6 +59,10 @@ export default function Home() {
   useEffect(() => {
     getGames(setGames);
   }, []);
+
+  useEffect(() => {
+    games.length > 0 && setGamesLoaded(true);
+  }, [games]);
 
   useEffect(() => {
     if (localStorage.getItem("access_token_discord") !== null) {
@@ -120,7 +125,7 @@ export default function Home() {
         </span>{" "}
         está aqui.
       </h1>
-      {games.length > 1 && <GamesCarrosel games={games} />}
+      {gamesLoaded && <GamesCarrosel games={games} />}
       <Dialog.Root>
         <CreateAdBanner />
         <CreateAdModal games={games} />
