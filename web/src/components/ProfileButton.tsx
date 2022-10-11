@@ -51,7 +51,10 @@ export default function ProfileButton({
               </span>
             </span>
           </div>
-          <button className="text-red-600" onClick={handleSignOut}>
+          <button
+            className="text-red-600 whitespace-nowrap"
+            onClick={handleSignOut}
+          >
             Log Out
           </button>
         </div>
