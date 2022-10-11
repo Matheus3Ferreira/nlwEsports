@@ -23,6 +23,28 @@ export default function GameSlider({ games }: IProps) {
       spacing: 24,
     },
   });
+  //Quantos cabem dentro do container?
+  //Se quantosCabem > containerMaximo / tamanho de cada img
+  console.log(
+    instanceRef.current &&
+      "Cabem: " + Math.round(instanceRef.current.size / 180)
+  );
+  console.log(
+    instanceRef.current &&
+      "Estou na posição: " + instanceRef.current.track.details.abs
+  );
+  console.log(
+    instanceRef.current &&
+      "Posição maxima: " + instanceRef.current.track.details.slides.length
+  );
+  console.log("Fórmula: O que cabe > tamanho maximo - posição atual === true");
+
+  console.log(
+    instanceRef.current &&
+      Math.round(instanceRef.current.size / 180) >
+        instanceRef.current.track.details.slides.length -
+          instanceRef.current.track.details.abs
+  );
   return (
     <div className="flex mt-16 items-center justify-center box-border w-full">
       <Arrow
@@ -50,7 +72,9 @@ export default function GameSlider({ games }: IProps) {
         onClick={(e: any) => e.stopPropagation() || instanceRef.current?.next()}
         disabled={
           instanceRef.current &&
-          currentSlide === instanceRef.current.track.details.slides.length - 6
+          Math.round(instanceRef.current.size / 180) >
+            instanceRef.current.track.details.slides.length -
+              instanceRef.current.track.details.abs
         }
       />
     </div>
