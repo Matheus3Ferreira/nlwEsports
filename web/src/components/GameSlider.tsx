@@ -9,7 +9,7 @@ interface IProps {
   games: IGame[];
 }
 
-export default function GamesCarrosel({ games }: IProps) {
+export default function GameSlider({ games }: IProps) {
   const [currentSlide, setCurrentSlide] = React.useState(0);
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     slideChanged(slider) {
@@ -24,24 +24,26 @@ export default function GamesCarrosel({ games }: IProps) {
     },
   });
   return (
-    <div className="flex mt-16 items-center">
+    <div className="flex mt-16 items-center justify-center box-border w-full">
       <Arrow
         left
         onClick={(e: any) => e.stopPropagation() || instanceRef.current?.prev()}
         disabled={currentSlide === 0}
       />
 
-      <div className="h-[240px] max-w-[1344px]">
-        <div ref={sliderRef} className="keen-slider" style={{ maxWidth: 1344 }}>
-          {games.map((game) => (
-            <GameBanner
-              title={game.title}
-              adsCount={game._count.ads}
-              bannerUrl={game.bannerUrl}
-              key={game.id}
-            />
-          ))}
-        </div>
+      <div
+        ref={sliderRef}
+        className="keen-slider overflow-hidden"
+        style={{ maxWidth: 1344, maxHeight: 240 }}
+      >
+        {games.map((game) => (
+          <GameBanner
+            title={game.title}
+            adsCount={game._count.ads}
+            bannerUrl={game.bannerUrl}
+            key={game.id}
+          />
+        ))}
       </div>
 
       <Arrow

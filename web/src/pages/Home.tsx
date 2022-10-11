@@ -10,7 +10,7 @@ import { SignInModal } from "../components/SignInModal";
 import { SignUpModal } from "../components/SignUpModal";
 import getUserDiscordData from "../api/getUserDiscordData";
 import getUserData from "../api/getUserData";
-import GamesCarrosel from "../components/GamesCarrosel";
+import GameSlider from "../components/GameSlider";
 
 export interface IGame {
   bannerUrl: string;
@@ -125,7 +125,7 @@ export default function Home() {
         </span>{" "}
         está aqui.
       </h1>
-      {gamesLoaded && <GamesCarrosel games={games} />}
+      {gamesLoaded && <GameSlider games={games} />}
       <Dialog.Root>
         <CreateAdBanner />
         <CreateAdModal games={games} />
