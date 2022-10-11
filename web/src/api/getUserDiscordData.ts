@@ -17,14 +17,14 @@ export default async function getUserDiscordData({
         authorization: `Bearer ${token}`,
       },
     })
-    .then(({ data }) =>
+    .then(({ data }) => {
       setUserDiscordData({
         username: data.username,
         avatar: data.avatar,
         discriminator: data.discriminator,
         id: data.id,
-      })
-    );
+      });
+    });
 
   return data;
 }

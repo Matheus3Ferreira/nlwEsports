@@ -44,7 +44,7 @@ export default function ProfileButton({
         <div className="flex items-center justify-end gap-6 bg-zinc-900 p-3 rounded-md absolute mt-16 right-14">
           <div>
             <p className="text-white">Olá</p>
-            <span className="text-white font-semibold text-lg">
+            <span className="text-white font-semibold whitespace-nowrap text-lg">
               {username}
               <span className="text-zinc-600 font-normal">
                 {discriminator && "#" + discriminator}
