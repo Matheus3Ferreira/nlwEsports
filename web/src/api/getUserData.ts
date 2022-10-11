@@ -24,6 +24,5 @@ export default async function getUserData({
         phone: data.phone,
         whatsapp: data.whatsapp,
       });
-      console.log(data);
     });
 }
