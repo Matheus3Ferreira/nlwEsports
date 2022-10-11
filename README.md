@@ -34,7 +34,7 @@ O NLW Esports é uma plataforma web e mobile de anúncios de gamers a procura de
 
 ## O que vem ai? 🛠
 
-- !!EM BREVE!!: Deploy no Heroku.
+### !!EM BREVE!!: Deploy no Heroku.
 - Autorização (Somente usuários cadastrados podem ver informações de contato de outros usuários)
 - Criação de anúncios com web
 - My ads (Sua tela de gestão de ads.);
