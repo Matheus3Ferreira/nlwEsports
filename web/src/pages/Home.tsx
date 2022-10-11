@@ -77,7 +77,7 @@ export default function Home() {
 
   return (
     <div className="flex justify-center items-center flex-col my-20 px-5">
-      <header className=" justify-between items-center flex w-[100%]">
+      <header className=" justify-between items-center flex w-[100%] flex-wrap">
         <div className="w-14 h-14" />
         <img src={logoImg} alt="" />
         <Dialog.Root>

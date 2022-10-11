@@ -11,13 +11,15 @@ interface IProps {
 
 export default function GamesCarrosel({ games }: IProps) {
   const [currentSlide, setCurrentSlide] = React.useState(0);
-  const [loaded, setLoaded] = useState(false);
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     slideChanged(slider) {
       setCurrentSlide(slider.track.details.rel);
     },
+    loop: false,
+    mode: "snap",
+    rtl: false,
     slides: {
-      perView: 6,
+      perView: "auto",
       spacing: 24,
     },
   });
@@ -28,18 +30,18 @@ export default function GamesCarrosel({ games }: IProps) {
         onClick={(e: any) => e.stopPropagation() || instanceRef.current?.prev()}
         disabled={currentSlide === 0}
       />
-      <div
-        ref={sliderRef}
-        className="keen-slider max-w-[1344px] h-[270px] overflow-hidden"
-      >
-        {games.map((game) => (
-          <GameBanner
-            title={game.title}
-            adsCount={game._count.ads}
-            bannerUrl={game.bannerUrl}
-            key={game.id}
-          />
-        ))}
+
+      <div className="h-[240px] max-w-[1344px]">
+        <div ref={sliderRef} className="keen-slider" style={{ maxWidth: 1344 }}>
+          {games.map((game) => (
+            <GameBanner
+              title={game.title}
+              adsCount={game._count.ads}
+              bannerUrl={game.bannerUrl}
+              key={game.id}
+            />
+          ))}
+        </div>
       </div>
 
       <Arrow
