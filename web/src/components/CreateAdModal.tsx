@@ -5,11 +5,11 @@ import { SelectRadix } from "./Form/SelectRadix";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import { FormEvent, SetStateAction, useState } from "react";
 import axios from "axios";
-import { Game } from "../pages/Home";
+import { IGame } from "../pages/Home";
 import CheckBox from "./Form/CheckBox";
 
 interface Games {
-  games: Game[];
+  games: IGame[];
 }
 
 export function CreateAdModal({ games }: Games) {

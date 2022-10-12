@@ -1,8 +1,8 @@
 import axios from "axios";
-import { Game } from "../pages/Home";
+import { IGame } from "../pages/Home";
 
 export default async function getGames(
-  setGames: React.Dispatch<React.SetStateAction<Game[]>>
+  setGames: React.Dispatch<React.SetStateAction<IGame[]>>
 ) {
   await axios.get("http://localhost:3333/api/games").then((response) => {
     setGames(response.data);
