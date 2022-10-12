@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsnd --exit-child src/server.ts"
+    "dev": "tsnd --exit-child src/server.ts",
+    "start": "node build/index.js"
   },
   "keywords": [],
   "author": "",
